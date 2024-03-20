@@ -22,6 +22,7 @@ author:
   - name: Karsten Walther
     org: Perinet GmbH
     email: karsten.walther@perinet.io
+    country: Germany
   - name: Carsten Bormann
     org: Universität Bremen TZI
     street: Postfach 330440
