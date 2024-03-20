@@ -48,6 +48,16 @@ Status of This Memo
 
    This Internet-Draft will expire on 21 September 2024.
 
+
+
+
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 1]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
+
 Copyright Notice
 
    Copyright (c) 2024 IETF Trust and the persons identified as the
@@ -64,23 +74,23 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-     1.1.  Conventions and Definitions
-   2.  Background
-   3.  Problems
-     3.1.  Problem 1: misleading mDNS name resolution
-     3.2.  Problem 2: .local request sent to nameservers
-     3.3.  Problem 3: IPv6 LL zone ID
-     3.4.  Problem 4: Support for offline environments
-     3.5.  Problem 5: Short certificate lifetime
-     3.6.  Problem 6: No standard simple role based access model
-     3.7.  Problem 7: Browsers disrespect Web server constraints
-     3.8.  Problem 8: Virtualization environments act as routers
-     3.9.  What next?
-   4.  Security Considerations
-   5.  IANA Considerations
-   Acknowledgments
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Conventions and Definitions . . . . . . . . . . . . . . .   2
+   2.  Background  . . . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Problems  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     3.1.  Problem 1: misleading mDNS name resolution  . . . . . . .   3
+     3.2.  Problem 2: .local request sent to nameservers . . . . . .   4
+     3.3.  Problem 3: IPv6 LL zone ID  . . . . . . . . . . . . . . .   4
+     3.4.  Problem 4: Support for offline environments . . . . . . .   4
+     3.5.  Problem 5: Short certificate lifetime . . . . . . . . . .   5
+     3.6.  Problem 6: No standard simple role based access model . .   5
+     3.7.  Problem 7: Browsers disrespect Web server constraints . .   5
+     3.8.  Problem 8: Virtualization environments act as routers . .   6
+     3.9.  What next?  . . . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -95,6 +105,14 @@ Table of Contents
       -  in our case Single Pair Ethernet is used
 
       -  no user interface, except a web page and a label
+
+
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 2]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
 
    *  devices, virtual devices and local services (on containers)
 
@@ -143,6 +161,14 @@ Table of Contents
       -  .local
 
       -  .my-intranet
+
+
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 3]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
 
       -  .tld
 
@@ -193,6 +219,13 @@ Table of Contents
       -  some browsers deactivate IPv6 completely (also Link Local),
          when there is no Internet connectivity
 
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 4]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
+
       -  Windows deactivates MDNS for unknown networks by default
 
       -  user cannot type IPv6 addresses with zone ID in the address bar
@@ -242,6 +275,13 @@ Table of Contents
 
       -  ≤ 6 connections
 
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 5]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
+
       -  memory restrictions ➔ no Jumbo Frames
 
    *  is ignored by some browsers or web libraries
@@ -288,6 +328,16 @@ Acknowledgments
 
 Authors' Addresses
 
+
+
+
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 6]
+
+Internet-Draft           IoT Operational Issues               March 2024
+
+
    Karsten Walther
    Perinet GmbH
    Germany
@@ -301,3 +351,42 @@ Authors' Addresses
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Walther & Bormann       Expires 21 September 2024               [Page 7]
