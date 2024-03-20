@@ -23,7 +23,7 @@ title: "TODO - Your title"
 abbrev: "TODO - Abbreviation"
 category: info
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-walther-iotops-iot-ops-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -36,12 +36,8 @@ keyword:
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: iotops
+  github: cabo/iot-ops
 
 author:
  -
@@ -66,9 +62,12 @@ TODO Abstract
 TODO Introduction
 
 
-# Conventions and Definitions
+## Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+# Content
+
 
 
 # Security Considerations
