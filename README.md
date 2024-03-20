@@ -1,6 +1,6 @@
-# TODO - Your title
+# IoT Operational Issues
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "IoT Operational Issues".
 
 * [Editor's Copy](https://cabo.github.io/iot-ops/#go.draft-walther-iotops-iot-ops.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-walther-iotops-iot-ops)
