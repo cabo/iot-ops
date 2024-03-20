@@ -9,15 +9,15 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: "Operations and Management"
+workgroup: "IOT Operations"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: iotops
-  github: cabo/iot-ops
+  group: "IOT Operations"
+  github: "cabo/iot-ops"
 
 author:
  -
