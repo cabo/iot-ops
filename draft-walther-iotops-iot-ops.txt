@@ -1,0 +1,323 @@
+
+
+
+
+IOT Operations                                                K. Walther
+Internet-Draft                                              Perinet GmbH
+Intended status: Informational                                C. Bormann
+Expires: 21 September 2024                        Universität Bremen TZI
+                                                           20 March 2024
+
+
+                         IoT Operational Issues
+                  draft-walther-iotops-iot-ops-latest
+
+Abstract
+
+   This I-D is based on a presentation at IETF 119 in the IOTOPS WG.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-walther-iotops-iot-ops/.
+
+   Discussion of this document takes place on the IOTOPS Working Group
+   mailing list (mailto:iotops@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/iotops/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/iotops/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/cabo/iot-ops.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 21 September 2024.
+
+Copyright Notice
+
+   Copyright (c) 2024 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Conventions and Definitions
+   2.  Background
+   3.  Problems
+     3.1.  Problem 1: misleading mDNS name resolution
+     3.2.  Problem 2: .local request sent to nameservers
+     3.3.  Problem 3: IPv6 LL zone ID
+     3.4.  Problem 4: Support for offline environments
+     3.5.  Problem 5: Short certificate lifetime
+     3.6.  Problem 6: No standard simple role based access model
+     3.7.  Problem 7: Browsers disrespect Web server constraints
+     3.8.  Problem 8: Virtualization environments act as routers
+     3.9.  What next?
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  Normative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   [See abstract]
+
+1.1.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [BCP14] when, and only when, they appear in all capitals, as
+   shown here.
+
+2.  Background
+
+   *  Simple networkable things: light, sensor, power-switch
+
+      -  in our case Single Pair Ethernet is used
+
+      -  no user interface, except a web page and a label
+
+   *  devices, virtual devices and local services (on containers)
+
+      -  act autonomously together during normal operation
+
+      -  users occasionally use a browser for interaction
+
+   *  Typical Applications: Operations level in industry, building and
+      agriculture
+
+      -  often no internet connection nor name server or DHCP available
+
+   *  Typical User: _Technician_ without IT knowledge
+
+      -  previously configured a PLC
+
+      -  has no administration rights on their computer
+
+      -  minimizes contact to network administrators
+
+   ➔ must support ad-hoc connection by technician
+   ➔ Zeroconf is a base requirement
+
+   Example Hardware For Web Server and MQTT Client:
+
+   *  Cortex R4 250MHz
+
+   *  ~ 200KB RAM (for code and data)
+
+3.  Problems
+
+3.1.  Problem 1: misleading mDNS name resolution
+
+   *  mDNS resolves to multiple addresses GA, ULA and LL
+
+      -  often the requester cannot use all of them and has to select
+
+         o  intransparent to the user because hidden in the SW stack
+
+         o  no control possibility by the user (browser address field)
+
+         o  non deterministic
+
+   *  the problem is unnecessary, since requester defines a domain
+
+      -  .local
+
+      -  .my-intranet
+
+      -  .tld
+
+      -  ➔ just reply addresses matching to the domain
+
+3.2.  Problem 2: .local request sent to nameservers
+
+   *  local nameserves may silently ignore .local requests
+
+      -  ➔ timeout ➔ requested web server inaccessible by browser
+
+      -  strange workarounds in the field (e.g., fritz.box)
+
+         o  how should an IoT device know what is a local scope?
+
+   *  some name servers reply a special address for unknown host names
+
+      -  the actual device never will use this and is therefore
+         inaccessible
+
+3.3.  Problem 3: IPv6 LL zone ID
+
+   *  makes URIs unusable: information in the URL is locally valid only
+
+      -  Setup: Client (Browser), Management HTTP Service (on Edge
+         Device), and IoT Web service (on the networked sensor) are
+         connected in L2
+
+      -  Management Web page cannot provide an IPv6 LL address as link
+         to the networked sensor
+
+      -  same applies in various other situations
+
+   *  no support by many popular libraries (e.g., nodejs)
+      ➔ "non-working-experience" for users
+
+   *  IMHO zone ID is unnecessary:
+      it creates more problems now than it solves later
+
+3.4.  Problem 4: Support for offline environments
+
+   *  Example Situation: Sensors on a plow attached to different pulling
+      machines (or not at all during servicing)
+
+   *  Webpage cannot be accessed by the user due to various reasons
+
+      -  some browsers deactivate IPv6 completely (also Link Local),
+         when there is no Internet connectivity
+
+      -  Windows deactivates MDNS for unknown networks by default
+
+      -  user cannot type IPv6 addresses with zone ID in the address bar
+
+      -  browsers don't support local web server lookup via mdns, as
+         printer dialogue does, and local device may be muddy or below
+         covers, thus the user will have no address information
+
+3.5.  Problem 5: Short certificate lifetime
+
+   *  Web PKI is moving to ever smaller certificate lifetimes
+
+   *  devices are not online in many cases and cannot be updated
+      automatically with certificates
+
+      -  during shelf storage
+
+      -  attached to non-powered machinery, different networks or no
+         internet connectivity for months
+
+      -  required fall back after factory reset to initial certificate
+
+3.6.  Problem 6: No standard simple role based access model
+
+   *  Authorization is granted via a client certificate
+
+   *  User levels are typically simple
+
+      -  normal authenticated users can read values or control actuators
+
+      -  privileged users: e.g., setting calibration values
+
+      -  application admins (technicians) can do everything: updates,
+         connection settings, security
+
+   *  so far we use an extension field in certificates in a proprietary
+      way
+
+      -  works very well, but we would like to have a standard
+
+      -  support by standard PKI tools required in the mid term
+
+3.7.  Problem 7: Browsers disrespect Web server constraints
+
+   *  our device tells the client the maximum packet size and number of
+      connections
+
+      -  ≤ 6 connections
+
+      -  memory restrictions ➔ no Jumbo Frames
+
+   *  is ignored by some browsers or web libraries
+
+      -  especially in browsers it looks like a stalled device, with
+         MQTT, MDNS still working
+
+3.8.  Problem 8: Virtualization environments act as routers
+
+   *  IoT heavily relies on ZeroConf mechanisms like MDNS
+
+      -  e.g. a sensor has to find the responsible MQTT broker, which
+         runs in a container
+
+      -  user need to access user interface in browser
+
+   *  Virtualization environments (docker, snap...) act as routers
+
+      -  IPv6 LL and mdns cannot be used
+
+      -  breaks fundamentals of local IoT
+
+3.9.  What next?
+
+   *  Where can standardization help?
+
+      -  Help me to identify the right working groups
+
+      -  or link me to relevant groups outside of IETF
+
+   *  Are there simpler ways than updating/making standards?
+
+4.  Security Considerations
+
+   TODO Security
+
+5.  IANA Considerations
+
+   This document has no IANA actions.
+
+6.  Normative References
+
+   [BCP14]    Best Current Practice 14,
+              <https://www.rfc-editor.org/info/bcp14>.
+              At the time of writing, this BCP comprises the following:
+
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+              Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Authors' Addresses
+
+   Karsten Walther
+   Perinet GmbH
+   Email: karsten.walther@perinet.io
+
+
+   Carsten Bormann
+   Universität Bremen TZI
+   Postfach 330440
+   D-28359 Bremen
+   Germany
+   Phone: +49-421-218-63921
+   Email: cabo@tzi.org
